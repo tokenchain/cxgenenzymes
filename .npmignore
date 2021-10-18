@@ -1,0 +1,68 @@
+
+# ==============================================================================
+# UNIQUE TO `.npmignore`
+# ------------------------------------------------------------------------------
+.editorconfig
+.eslintrc.js
+.gitattributes
+.gitignore
+# ==============================================================================
+
+
+# ==============================================================================
+# COPIED FROM `.gitignore`
+# See `.gitignore` for comments and details. Don't explicitly include items
+# that are automatically handled by **npm** as described in the documentation.
+# ------------------------------------------------------------------------------
+.tmp
+package-lock.json
+
+*.diff
+*.err
+*.log
+*.orig
+*.zip
+*~
+
+**/*.DS_Store
+**/Thumbs.db
+.cache
+.idea
+.project
+.settings
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+# ==============================================================================
+# Source code (distributed code lives in /lib)
+/src
+/coverage
+/node_modules
+/stubs
+/test
+
+# Common for .gitignore and .npmignore
+src-cov/
+lcov/
+site/
+cov.*
+.vagrant
+*.log
+
+# List specific to .npmignore
+.travis.yml
+docs/
+img/
+test/
+mkdocs.yml
+provisioning.sh
+coffeelint.json
+Vagrantfile
+*.apib
+*.md
+
+# Regardless the rules above, never ignore following
+!LICENSE
+!README.md
