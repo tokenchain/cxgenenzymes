@@ -54,35 +54,54 @@ export class utils {
         if (solType.match(TRAILING_ARRAY_REGEX)) {
             const arrayItemSolType = solType.replace(TRAILING_ARRAY_REGEX, '');
             const arrayItemTsType = utils.solTypeToTsType(paramKind, backend, arrayItemSolType, components);
-            const arrayTsType = utils.isUnionType(arrayItemTsType) || utils.isObjectType(arrayItemTsType)
+            const arrayTsType = utils.isUnionTypeTs(arrayItemTsType, backend) || utils.isObjectType(arrayItemTsType)
                 ? `Array<${arrayItemTsType}>`
                 : `${arrayItemTsType}[]`;
             return arrayTsType;
         } else {
             let solTypeRegexToTsType;
-            if (backend === ContractsBackend.Ethers || backend === ContractsBackend.Web3) {
-                solTypeRegexToTsType = [
-                    {regex: '^string$', tsType: 'string'},
-                    {regex: '^address$', tsType: 'string'},
-                    {regex: '^bool$', tsType: 'boolean'},
-                    {regex: '^u?int\\d*$', tsType: 'BN'},
-                    {regex: '^bytes\\d*$', tsType: 'string'},
-                ];
-            } else {
-                solTypeRegexToTsType = [
-                    {regex: '^string$', tsType: 'string'},
-                    {regex: '^address$', tsType: 'string'},
-                    {regex: '^bool$', tsType: 'boolean'},
+            solTypeRegexToTsType = [
+                {regex: '^string$', tsType: 'string'},
+                {regex: '^address$', tsType: 'string'},
+                {regex: '^bool$', tsType: 'boolean'},
+                {regex: '^bytes\\d*$', tsType: 'string'},
+            ];
+
+            if (backend === ContractsBackend.Tron) {
+                solTypeRegexToTsType.push(
                     {regex: '^u?int\\d*$', tsType: 'BigNumber'},
-                    {regex: '^bytes\\d*$', tsType: 'string'},
-                ];
+                );
             }
+
+            if (backend === ContractsBackend.Ethers) {
+                solTypeRegexToTsType.push(
+                    {regex: '^u?int\\d*$', tsType: 'BigNumber'},
+                );
+            }
+
+            if (backend === ContractsBackend.Web3) {
+                solTypeRegexToTsType.push(
+                    {regex: '^u?int\\d*$', tsType: 'BN'},
+                );
+            }
+
             if (paramKind === ParamKind.Input) {
                 // web3 and ethers allow to pass those as numbers instead of bignumbers
-                solTypeRegexToTsType.unshift({
-                    regex: '^u?int(8|16|32)?$',
-                    tsType: 'number|BigNumber|BN',
-                });
+
+                if (backend === ContractsBackend.Ethers) {
+                    solTypeRegexToTsType.unshift({
+                        regex: '^u?int(8|16|32)?$',
+                        tsType: 'number|BigNumber',
+                    });
+                }
+
+                if (backend === ContractsBackend.Web3) {
+                    solTypeRegexToTsType.unshift({
+                        regex: '^u?int(8|16|32)?$',
+                        tsType: 'number|BN',
+                    });
+                }
+
                 if (backend === ContractsBackend.Tron) {
                     solTypeRegexToTsType.unshift({
                             regex: '^u?int\\d*$',
@@ -91,12 +110,14 @@ export class utils {
                     );
                 }
             }
-            if (backend === ContractsBackend.Ethers && paramKind === ParamKind.Output) {
-                // ethers-contracts automatically converts small BigNumbers to numbers
-                solTypeRegexToTsType.unshift({
-                    regex: '^u?int(8|16|32|48)?$',
-                    tsType: 'number',
-                });
+            if (paramKind === ParamKind.Output) {
+                if (backend === ContractsBackend.Ethers) {
+                    // ethers-contracts automatically converts small BigNumbers to numbers
+                    solTypeRegexToTsType.unshift({
+                        regex: '^u?int(8|16|32|48)?$',
+                        tsType: 'number',
+                    });
+                }
             }
             for (const regexAndTxType of solTypeRegexToTsType) {
                 const {regex, tsType} = regexAndTxType;
@@ -155,8 +176,14 @@ export class utils {
         }
     }
 
-    public static isUnionType(tsType: string): boolean {
-        return tsType === 'number|BigNumber|BN';
+    public static isUnionTypeTs(tsType: string, sdk: ContractsBackend): boolean {
+        if (sdk === ContractsBackend.Tron) {
+            return tsType === 'number|BigNumber';
+        } else if (sdk === ContractsBackend.Web3) {
+            return tsType === 'number|BN';
+        } else {
+            return tsType === 'number|BigNumber';
+        }
     }
 
     public static isObjectType(tsType: string): boolean {

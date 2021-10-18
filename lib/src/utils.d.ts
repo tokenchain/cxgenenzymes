@@ -5,7 +5,7 @@ export declare class utils {
     static solTypeToAssertion(solName: string, solType: string): string;
     static solTypeToTsType(paramKind: ParamKind, backend: ContractsBackend, solType: string, components?: DataItem[]): string;
     static solTypeToPyType(dataItem: DataItem): string;
-    static isUnionType(tsType: string): boolean;
+    static isUnionTypeTs(tsType: string, sdk: ContractsBackend): boolean;
     static isObjectType(tsType: string): boolean;
     static getPartialNameFromFileName(filename: string): string;
     static getNamedContent(filename: string): {
