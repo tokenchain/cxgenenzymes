@@ -1,4 +1,5 @@
-# ABI Gen
+# CX Gen Enzymes for Solidity
+
 
 This package allows you to generate TypeScript or Python contract wrappers from ABI files.
 It's heavily inspired by [Geth abigen](https://github.com/ethereum/go-ethereum/wiki/Native-DApps:-Go-bindings-to-Ethereum-contracts) but takes a different approach.
@@ -13,7 +14,7 @@ You can write your custom handlebars templates which will allow you to seamlessl
 `npm i -g easy-abi-gen` from the rest of the world
 
 
-## Template supports working progress
+## Template supports in working progress:
 
 - [x] Typescript
 - [x] Python
