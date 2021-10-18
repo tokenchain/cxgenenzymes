@@ -1,6 +1,6 @@
 {
   "name": "easy-abi-gen",
-  "version": "5.3.225",
+  "version": "5.3.226",
   "engines": {
     "node": ">=12.1"
   },
