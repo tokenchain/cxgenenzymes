@@ -1,15 +1,16 @@
 import * as changeCase from 'change-case';
 // @ts-ignore
 import * as cliFormat from 'cli-format';
-import { AbiDefinition, DataItem, MethodAbi } from 'ethereum-types';
+import {AbiDefinition, DataItem, MethodAbi} from 'ethereum-types';
 import * as Handlebars from 'handlebars';
 import toposort from 'toposort';
 
-import { utils } from './utils';
+import {utils} from './utils';
 
 /**
  * Register all Python-related Handlebars helpers
  */
+// tslint:disable-next-line:no-unnecessary-class
 export class PythonConvertor {
     public static register(): void {
         Handlebars.registerHelper('equal', (lhs: any, rhs: any) => {

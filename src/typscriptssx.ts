@@ -1,11 +1,12 @@
 import cliFormat from 'cli-format';
 import * as Handlebars from 'handlebars';
 
-import { ContractsBackend, ParamKind } from './types';
-import { utils } from './utils';
+import {ContractsBackend, ParamKind} from './types';
+import {utils} from './utils';
 
+// tslint:disable-next-line:no-unnecessary-class
 export class TypeScriptConvertor {
-    public static register(backended: ContractsBackend) {
+    public static register(backended: ContractsBackend): void {
         Handlebars.registerHelper('parameterType', utils.solTypeToTsType.bind(utils, ParamKind.Input, backended));
         Handlebars.registerHelper('assertionType', utils.solTypeToAssertion.bind(utils));
         Handlebars.registerHelper('returnType', utils.solTypeToTsType.bind(utils, ParamKind.Output, backended));

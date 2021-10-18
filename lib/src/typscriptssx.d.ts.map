@@ -1,1 +1,1 @@
-{"version":3,"file":"typscriptssx.d.ts","sourceRoot":"","sources":["../../src/typscriptssx.ts"],"names":[],"mappings":"AAGA,OAAO,EAAE,gBAAgB,EAAa,MAAM,SAAS,CAAC;AAGtD,qBAAa,mBAAmB;WACd,QAAQ,CAAC,SAAS,EAAE,gBAAgB;CA2CrD"}
+{"version":3,"file":"typscriptssx.d.ts","sourceRoot":"","sources":["../../src/typscriptssx.ts"],"names":[],"mappings":"AAGA,OAAO,EAAC,gBAAgB,EAAY,MAAM,SAAS,CAAC;AAIpD,qBAAa,mBAAmB;WACd,QAAQ,CAAC,SAAS,EAAE,gBAAgB,GAAG,IAAI;CA2C5D"}
