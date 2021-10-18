@@ -1,3 +1,4 @@
+import {logUtils} from '@0x/utils';
 import * as changeCase from 'change-case';
 import * as cliFormat from 'cli-format';
 import { createHash } from 'crypto';
@@ -12,6 +13,7 @@ import { Args, ContractsBackend, ParamKind } from './types';
 export const TRAILING_ARRAY_REGEX = /\[\d*\]$/;
 const TUPLE_TYPE_REGEX = '^tuple$';
 
+// tslint:disable-next-line:no-unnecessary-class class-name
 export class utils {
     public static solTypeToAssertion(solName: string, solType: string): string {
         if (solType.match(TRAILING_ARRAY_REGEX)) {
@@ -117,7 +119,7 @@ export class utils {
                 const tsType = `{${componentsType.join(';')}}`;
                 return tsType;
             }
-            throw new Error(`Unknown Solidity type found: ${solType}`);
+            throw new Error(`❗️ Unknown Solidity type found: ${solType}`);
         }
     }
 
@@ -129,7 +131,7 @@ export class utils {
             });
             const arrayItemPyType = utils.solTypeToPyType(dataItem);
             const converted = `List[${arrayItemPyType}]`;
-            console.log('checking array items: -> ', solType, dataItem.type, converted);
+            logUtils.log('🔄  Checking array items: --> ', solType, dataItem.type, converted);
             return converted;
         } else {
             const solTypeRegexToPyType = [
@@ -148,7 +150,7 @@ export class utils {
             if (solType.match(TUPLE_TYPE_REGEX)) {
                 return utils.makePythonTupleName(dataItem);
             }
-            throw new Error(`Unknown Solidity type found: ${solType}`);
+            throw new Error(`❗️ Unknown Solidity type found: ${solType}`);
         }
     }
 
@@ -174,7 +176,7 @@ export class utils {
                 content,
             };
         } catch (err) {
-            throw new Error(`Failed to read ${filename}: ${err}`);
+            throw new Error(`🪗  Failed to read ${filename}: ${err}`);
         }
     }
 

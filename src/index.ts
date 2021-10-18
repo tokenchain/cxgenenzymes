@@ -1,19 +1,19 @@
 #!/usr/bin/env node
-import { AbiEncoder, abiUtils, logUtils } from '@0x/utils';
+import {AbiEncoder, abiUtils, logUtils} from '@0x/utils';
 import chalk from 'chalk';
-import { execSync } from 'child_process';
-import { AbiDefinition, ConstructorAbi, ContractAbi, DevdocOutput, EventAbi, MethodAbi } from 'ethereum-types';
-import { sync as globSync } from 'glob';
+import {execSync} from 'child_process';
+import {AbiDefinition, ConstructorAbi, ContractAbi, DevdocOutput, EventAbi, MethodAbi} from 'ethereum-types';
+import {sync as globSync} from 'glob';
 import * as Handlebars from 'handlebars';
 import * as _ from 'lodash';
 import * as mkdirp from 'mkdirp';
 import path from 'path';
 import * as yargs from 'yargs';
 
-import { PythonConvertor } from './pythonssx';
-import { Args, ContextData, ContractsBackend } from './types';
-import { TypeScriptConvertor } from './typscriptssx';
-import { utils } from './utils';
+import {PythonConvertor} from './pythonssx';
+import {Args, ContextData, ContractsBackend} from './types';
+import {TypeScriptConvertor} from './typscriptssx';
+import {utils} from './utils';
 
 const ABI_TYPE_CONSTRUCTOR = 'constructor';
 const ABI_TYPE_METHOD = 'function';
@@ -103,7 +103,7 @@ for (const abiFileName of abiFileNames) {
     const binFile = abiFileName.replace(/\.[^.]+$/, '.bin');
     const binFileContent = utils.getNamedContent(binFile);
     const className = path.parse(abiFileName).name;
-    logUtils.log(`⚙️ Processing: ${className} - ${chalk.bold(namedContent.name)}...`);
+    logUtils.log(`⚙️  Processing: ${className} - ${chalk.bold(namedContent.name)}...`);
     let parsedContent;
     try {
         parsedContent = JSON.parse(namedContent.content);
@@ -144,7 +144,7 @@ for (const abiFileName of abiFileNames) {
     })();
 
     if (utils.isOutputFileUpToDate(outFilePath, [abiFileName, templateFilename, ...partialTemplateFileNames])) {
-        logUtils.log(`Already up to date: ${chalk.bold(outFilePath)}`);
+        logUtils.log(`🧩  Already up to date: ${chalk.bold(outFilePath)}`);
         continue;
     }
 
@@ -240,7 +240,7 @@ for (const abiFileName of abiFileNames) {
                 logUtils.warn('❌ Failed to reformat generated Python with black.  Exception thrown by execSync("black ...") follows.');
                 throw e;
             } else {
-                logUtils.warn('Failed to invoke black. Do you have it installed? Proceeding anyways...');
+                logUtils.warn('🪗 Failed to invoke black. Do you have it installed? Proceeding anyways...');
             }
         }
     }

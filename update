@@ -94,11 +94,10 @@ CMD_FINAL="cnpm i -g $PROJECT_NAME@$VERSION"
 NODEPFILE="package.json"
 mod_package_json ".version" $VERSION
 mod_package_json ".name" $PROJECT_NAME
-mod_package_json ".homepage" "https://gitee.com/jjhoc/cmonorepoc"
-mod_package_json ".repository.url" "git@gitee.com:jjhoc/cmonorepoc.git"
-#npmdeploy
-#taobao
-#echo "You may manually enter \n$CMD_FINAL\n for installing the package with cnpm"
-#auto_install_nvm
-
+mod_package_json ".homepage" "https://github.com/tokenchain/cxgenenzymes"
+mod_package_json ".repository.url" "git@github.com:tokenchain/cxgenenzymes.git"
+npmdeploy
+taobao
 gitpush
+echo "You may manually enter \n$CMD_FINAL\n for installing the package with cnpm"
+auto_install_nvm
