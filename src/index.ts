@@ -199,6 +199,8 @@ for (const abiFileName of abiFileNames) {
             isPayable: _.has(methodAbi, 'stateMutability') && methodAbi.stateMutability === 'payable',
             isView: _.has(methodAbi, 'stateMutability') && methodAbi.stateMutability === 'view',
             isPure: _.has(methodAbi, 'stateMutability') && methodAbi.stateMutability === 'pure',
+            isPureOrView: _.has(methodAbi, 'stateMutability') && (methodAbi.stateMutability === 'pure' || methodAbi.stateMutability === 'view'),
+            isPureOrViewOrConstant: _.has(methodAbi, 'stateMutability') && (methodAbi.stateMutability === 'pure' || methodAbi.stateMutability === 'view') || _.has(methodAbi, 'constant') && methodAbi.constant,
             devdoc: devdoc ? devdoc.methods[functionSignature] : undefined,
         };
         return methodData;
