@@ -1,14 +1,14 @@
 import {logUtils} from '@0x/utils';
 import * as changeCase from 'change-case';
 import * as cliFormat from 'cli-format';
-import { createHash } from 'crypto';
-import { AbiType, ConstructorAbi, DataItem, TupleDataItem } from 'ethereum-types';
+import {createHash} from 'crypto';
+import {AbiType, ConstructorAbi, DataItem, TupleDataItem} from 'ethereum-types';
 import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as path from 'path';
 import toSnakeCase from 'to-snake-case';
 
-import { Args, ContractsBackend, ParamKind } from './types';
+import {Args, ContractsBackend, ParamKind} from './types';
 
 export const TRAILING_ARRAY_REGEX = /\[\d*\]$/;
 const TUPLE_TYPE_REGEX = '^tuple$';
@@ -25,14 +25,14 @@ export class utils {
                     regex: '^u?int(8|16|32|256)?$',
                     assertion: `assert.isNumberOrBigNumber('${solName}', ${solName});`,
                 },
-                { regex: '^string$', assertion: `assert.isString('${solName}', ${solName});` },
-                { regex: '^address$', assertion: `assert.isString('${solName}', ${solName});` },
-                { regex: '^bool$', assertion: `assert.isBoolean('${solName}', ${solName});` },
-                { regex: '^u?int\\d*$', assertion: `assert.isBigNumber('${solName}', ${solName});` },
-                { regex: '^bytes\\d*$', assertion: `assert.isString('${solName}', ${solName});` },
+                {regex: '^string$', assertion: `assert.isString('${solName}', ${solName});`},
+                {regex: '^address$', assertion: `assert.isString('${solName}', ${solName});`},
+                {regex: '^bool$', assertion: `assert.isBoolean('${solName}', ${solName});`},
+                {regex: '^u?int\\d*$', assertion: `assert.isBigNumber('${solName}', ${solName});`},
+                {regex: '^bytes\\d*$', assertion: `assert.isString('${solName}', ${solName});`},
             ];
             for (const regexAndTxType of solTypeRegexToTsType) {
-                const { regex, assertion } = regexAndTxType;
+                const {regex, assertion} = regexAndTxType;
                 if (solType.match(regex)) {
                     return assertion;
                 }
@@ -62,19 +62,19 @@ export class utils {
             let solTypeRegexToTsType;
             if (backend === ContractsBackend.Ethers || backend === ContractsBackend.Web3) {
                 solTypeRegexToTsType = [
-                    { regex: '^string$', tsType: 'string' },
-                    { regex: '^address$', tsType: 'string' },
-                    { regex: '^bool$', tsType: 'boolean' },
-                    { regex: '^u?int\\d*$', tsType: 'BN' },
-                    { regex: '^bytes\\d*$', tsType: 'string' },
+                    {regex: '^string$', tsType: 'string'},
+                    {regex: '^address$', tsType: 'string'},
+                    {regex: '^bool$', tsType: 'boolean'},
+                    {regex: '^u?int\\d*$', tsType: 'BN'},
+                    {regex: '^bytes\\d*$', tsType: 'string'},
                 ];
             } else {
                 solTypeRegexToTsType = [
-                    { regex: '^string$', tsType: 'string' },
-                    { regex: '^address$', tsType: 'string' },
-                    { regex: '^bool$', tsType: 'boolean' },
-                    { regex: '^u?int\\d*$', tsType: 'BigNumber' },
-                    { regex: '^bytes\\d*$', tsType: 'string' },
+                    {regex: '^string$', tsType: 'string'},
+                    {regex: '^address$', tsType: 'string'},
+                    {regex: '^bool$', tsType: 'boolean'},
+                    {regex: '^u?int\\d*$', tsType: 'BigNumber'},
+                    {regex: '^bytes\\d*$', tsType: 'string'},
                 ];
             }
             if (paramKind === ParamKind.Input) {
@@ -99,7 +99,7 @@ export class utils {
                 });
             }
             for (const regexAndTxType of solTypeRegexToTsType) {
-                const { regex, tsType } = regexAndTxType;
+                const {regex, tsType} = regexAndTxType;
                 if (solType.match(regex)) {
                     return tsType;
                 }
@@ -125,24 +125,25 @@ export class utils {
 
     public static solTypeToPyType(dataItem: DataItem): string {
         const solType = dataItem.type;
+        const tyName = dataItem.name;
         if (solType.match(TRAILING_ARRAY_REGEX)) {
             Object.assign(dataItem, {
                 type: dataItem.type.replace(TRAILING_ARRAY_REGEX, ''),
             });
             const arrayItemPyType = utils.solTypeToPyType(dataItem);
             const converted = `List[${arrayItemPyType}]`;
-            logUtils.log('🔄  Checking array items: --> ', solType, dataItem.type, converted);
+            logUtils.log(`🔄  Checking array items: ${tyName}, ${solType} ${dataItem.type} --> ${converted}`);
             return converted;
         } else {
             const solTypeRegexToPyType = [
-                { regex: '^string$', pyType: 'str' },
-                { regex: '^address$', pyType: 'str' },
-                { regex: '^bool$', pyType: 'bool' },
-                { regex: '^u?int\\d*$', pyType: 'int' },
-                { regex: '^bytes\\d*$', pyType: 'Union[bytes, str]' },
+                {regex: '^string$', pyType: 'str'},
+                {regex: '^address$', pyType: 'str'},
+                {regex: '^bool$', pyType: 'bool'},
+                {regex: '^u?int\\d*$', pyType: 'int'},
+                {regex: '^bytes\\d*$', pyType: 'Union[bytes, str]'},
             ];
             for (const regexAndTxType of solTypeRegexToPyType) {
-                const { regex, pyType } = regexAndTxType;
+                const {regex, pyType} = regexAndTxType;
                 if (solType.match(regex)) {
                     return pyType;
                 }

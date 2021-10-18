@@ -1,5 +1,5 @@
 {
-    "extends": "tsconf1.json",
+    "extends": "./tsconf1.json",
     "compilerOptions": {
         "types" : ["node"],
         "module": "commonjs",

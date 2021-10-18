@@ -9,8 +9,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var artifacts_1 = require("./artifacts");
-Object.defineProperty(exports, "artifacts", { enumerable: true, get: function () { return artifacts_1.artifacts; } });
+__createBinding(exports, artifacts_1, "artifacts");
 __exportStar(require("./wrappers"), exports);
-//# sourceMappingURL=index.js.map
